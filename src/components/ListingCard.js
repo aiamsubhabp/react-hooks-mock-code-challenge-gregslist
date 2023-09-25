@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ListingCard({listing}) {
+function ListingCard({listing, onDeleteListing}) {
 
   const { id, description, image, location} = listing
   const [isFav, setIsFav] = useState(false)
@@ -8,6 +8,15 @@ function ListingCard({listing}) {
   function handleFavClick() {
     console.log(listing)
     setIsFav(isFav => !isFav)
+  }
+
+  function handleDeleteClick() {
+    fetch(`http://localhost:6001/listings/${id}`, {
+      method: 'DELETE',
+    })
+      .then(r => r.json())
+      .then(() => onDeleteListing(id))
+
   }
 
   return (
@@ -24,7 +33,7 @@ function ListingCard({listing}) {
         )}
         <strong>{description}</strong>
         <span> · {location}</span>
-        <button className="emoji-button delete">🗑</button>
+        <button className="emoji-button delete" onClick={handleDeleteClick}>🗑</button>
       </div>
     </li>
   );

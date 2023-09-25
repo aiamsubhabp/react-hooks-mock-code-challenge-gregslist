@@ -11,10 +11,19 @@ function ListingsContainer() {
       .then(listings => setListings(listings))
   }, [])
 
+  function handleDeleteListing(id) {
+    const updatedListingsArray = listings.filter((listing) => {
+      return(
+      listing.id !== id
+    )})
+    setListings(updatedListingsArray)
+  }
+
 const listingCard = listings.map((listing) => (
     <ListingCard 
       key={listing.id}
       listing = {listing}
+      onDeleteListing = {handleDeleteListing}
     />
   ))
 
